@@ -47,11 +47,11 @@ la diferencia que podemos ver en la ejecucion de los tres hilos uno con el coman
 
 ![im8](https://github.com/fernando-b15/CNYT-Actividad-Esfera/blob/master/5.PNG)	
 
-### graficas de java visual con 200 hilo visual java
+### graficas de java visual con 200 hilos visual java
 
 ![im9](https://github.com/fernando-b15/CNYT-Actividad-Esfera/blob/master/6.PNG)	
 
-### graficas de java visual con 500 hilo visual java
+### graficas de java visual con 500 hilos visual java
 
 ![im7](https://github.com/fernando-b15/CNYT-Actividad-Esfera/blob/master/7.PNG)	
 
