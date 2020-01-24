@@ -5,7 +5,10 @@
 		
 ## parte 1
 
-### ejecucion de los tres hilos usando start()		
+### ejecucion de los tres hilos usando start()	
+
+! [im1] (https://github.com/fernando-b15/CNYT-Actividad-Esfera/blob/master/1.PNG)	
+! [im2] (https://github.com/fernando-b15/CNYT-Actividad-Esfera/blob/master/2.PNG)	
 
 ### ejecucion de los tres hilos usando run()
 
