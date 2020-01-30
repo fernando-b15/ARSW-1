@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Main{
+	public static int cont=0;
 	public static boolean estado=false;
 	public static ArrayList<PrimeFinderThread> hilos=new  ArrayList<PrimeFinderThread>();
 	public static void main(String[] args) {
@@ -22,47 +23,82 @@ public class Main{
 			ptf.start();
 			j+=+10000000;
 		}
-
+		try {
+			Thread.sleep(5000);
+			pausar();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	
 		
 		
-		TimerTask task = new TimerTask() {
-		      
-
-		        @Override
-		        public void run()
-		        {
-		        	int cont=0;
-		        	for(PrimeFinderThread h:hilos) {
-		        		h.suspend();
-		        		cont+=(h.getPrimes()).size();
-		        		
-		        
-		        	}
-		        	estado=true;
-
-		    		
-		        }
-		        };
-		timer.schedule(task,5000);
-		while(true) {
-		
-			synchronized(hilos) {
-				if(true) {
-						
-						Scanner teclado = new Scanner(System.in);
-						String prueba = teclado.nextLine();
-						(hilos.get(0)).resume();
-						(hilos.get(1)).resume();
-						(hilos.get(2)).resume();
-						break;
-					
-					}
-				}
-			}
+	
 	}
+	public static void pausar() {
+		for(PrimeFinderThread h:hilos) {
+			h.suspend();
+		}
+		synchronized(hilos) {
+			imprimir();
+			System.out.println("he encontrado"+" "+calcular()+" "+"primos");
+			reset();
+			System.out.println("presione enter para continuar");
+			Scanner scanner = new Scanner(System.in);
+			scanner.nextLine();
+			despertar();
+			terminar();
+			imprimir();
+			System.out.println("he encontrado"+" "+calcular()+" "+"primos");
 
-
+			
+		}
+	}
+	public static void terminar() {
+		for(PrimeFinderThread h:hilos) {
+			try {
+				h.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	public static void despertar() {
+		for(PrimeFinderThread h:hilos) {
+			h.resume();
+			try {
+				h.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public static int calcular() {
+		
+		for(PrimeFinderThread h:hilos) {
+			cont+=(h.getPrimes()).size();
+		}
+		return cont;
+		
+	}
+	public static void imprimir() {
+		for(PrimeFinderThread h:hilos) {
+			for(int num:h.getPrimes()) {
+				System.out.println(num);
+			}
+		}
+		
+	}
+	public static void reset() {
+		for(PrimeFinderThread h:hilos) {
+			h.reset();
+		}
+	}
+	
 
 
 	
