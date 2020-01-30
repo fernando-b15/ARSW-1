@@ -47,6 +47,7 @@ public class Main{
 			System.out.println("presione enter para continuar");
 			Scanner scanner = new Scanner(System.in);
 			scanner.nextLine();
+			scanner.close();
 			despertar();
 			terminar();
 			imprimir();

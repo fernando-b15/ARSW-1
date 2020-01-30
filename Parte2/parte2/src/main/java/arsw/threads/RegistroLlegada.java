@@ -1,8 +1,8 @@
 package arsw.threads;
 
-public class RegistroLlegada {
+public class  RegistroLlegada {
 
-	private int ultimaPosicionAlcanzada=1;
+	public static int ultimaPosicionAlcanzada=1;
 
 	private String ganador=null;
 	

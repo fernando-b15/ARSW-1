@@ -2,6 +2,7 @@ package arsw.threads;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 
@@ -12,6 +13,7 @@ public class MainCanodromo {
     private static Canodromo can;
 
     private static RegistroLlegada reg = new RegistroLlegada();
+    public static ArrayList<Integer> pos=new ArrayList<Integer>();
 
     public static void main(String[] args) {
         can = new Canodromo(17, 100);
@@ -31,6 +33,7 @@ public class MainCanodromo {
                         ((JButton) e.getSource()).setEnabled(false);
                         new Thread() {
                             public void run() {
+                            	synchronized(galgos){
                                 for (int i = 0; i < can.getNumCarriles(); i++) {
                                     //crea los hilos 'galgos'
                                     galgos[i] = new Galgo(can.getCarril(i), "" + i, reg);
@@ -39,11 +42,24 @@ public class MainCanodromo {
 
                                 }
                                
-				can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1); 
+                                for (int i = 0; i < can.getNumCarriles(); i++) {
+                                   
+                                    try {
+										galgos[i].join();
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+
+                                }
+                                
+                               
+                                can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1); 
                                 System.out.println("El ganador fue:" + reg.getGanador());
+                            	}
                             }
                         }.start();
-
+                        
                     }
                 }
         );
@@ -51,10 +67,16 @@ public class MainCanodromo {
         can.setStopAction(
                 new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
+                    public void actionPerformed(ActionEvent e)  {
                         System.out.println("Carrera pausada!");
-                    }
+                        for (int i = 0; i < can.getNumCarriles(); i++) {
+                            
+                           
+								galgos[i].suspend();
+							
+                        }
                 }
+            }
         );
 
         can.setContinueAction(
@@ -62,6 +84,12 @@ public class MainCanodromo {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Carrera reanudada!");
+                        for (int i = 0; i < can.getNumCarriles(); i++) {
+                            
+                            
+							galgos[i].resume();
+						
+                    }
                     }
                 }
         );
